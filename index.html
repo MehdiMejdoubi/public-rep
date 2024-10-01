@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="interface/style/index.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Your Recipes</title>
+</head>
+<body>
+    <div class="content">
+        <div class="upper-menu">
+            <img class="logo" src="interface/img/logo.png" alt="logo">
+            <div>
+                <input class="search-input" type="text" name="" id="" placeholder="Search over 1.000.000 recipes">
+                <button class="search-button">SEARCH</button>
+            </div>
+            <ul class="navbar-menu">
+                <li class="navbar-menu-element"><span class="material-symbols-outlined">edit_square</span>ADD RECEIPE</li>
+                <li class="navbar-menu-element"><span class="material-symbols-outlined">bookmark</span>BOOKMARKS</li>
+            </ul>
+        </div>
+
+        <side-bar></side-bar>
+
+        <div class="side-bar">
+            <div class="recipe-list-div" >
+                <ul class="recipe-list">
+                </ul>
+            </div>
+            <div class="side-bar-pagination-div">
+                <button class="previous-btn hidden"><span class="material-symbols-outlined">arrow_back</span>Previous</button>
+                <div class="page-number hidden">1</div>
+                <button class="next-btn hidden">Next<span class="material-symbols-outlined">arrow_forward</span></button>
+            </div>
+            <div class="credits">
+                <p class="credit-text">(2024) Developed and Made by Mehdi MEJDOUBI</p>
+            </div>
+        </div>
+
+        <div class="content-page">
+            <div class="intro-text">
+                <p class="hello-statement"><span class="material-symbols-outlined">sentiment_satisfied</span>Start by searching for recipe or an ingredient. Have fun!</p>
+            </div>
+        </div>
+    </div>  
+</body>
+<script type="module" src="logic/view.js"></script>
+<script type="module" src="logic/model.js"></script>
+<script type="module" src="logic/controller.js"></script>
+</html>
