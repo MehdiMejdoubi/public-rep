@@ -214,6 +214,16 @@ body {
         border-style: none;
         border-radius: 50px;
     }
+
+    .next-btn:hover {
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+    }
+
+    .previous-btn:hover {
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+    }
     
     .page-number {
         width: 40px;

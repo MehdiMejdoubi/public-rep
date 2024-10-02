@@ -14,14 +14,36 @@ const contentPage = document.querySelector('.content-page');
 
 searchBtn.addEventListener('click', async () => {
     await fetchRecipes(searchInput.value);
-    renderSideList();  
-    attachListEventListeners(); 
+    let chunkedList = chunkArray(modelInstance.getList(), 7);
+    const list = chunkedList[0];
+    renderSideList(list);  
+    pageNumber.textContent = 1;
+    previousBtn.classList.add('hidden');
 });
 
-function renderSideList() {
-    listContainer.innerHTML = ''; 
-    const list = modelInstance.getList().slice(0, 7);
+nextBtn.addEventListener('click', () => {
+    pagination('next', pageNumber.textContent);
+    pageNumber.textContent++;
+});
 
+previousBtn.addEventListener('click', () => {
+    pagination('previous', pageNumber.textContent);
+    pageNumber.textContent--;
+});
+
+function chunkArray(array, size){
+    let resultArray = [];
+    let index =  0;
+    while(index < array.length){
+        resultArray.push(array.slice(index, index + size));
+        index += size;
+    }
+    return resultArray;
+}
+
+function renderSideList(list) {
+    listContainer.innerHTML = ''; 
+    console.log(list);
     if (list && list.length > 0) {
         list.forEach(element => {
             listContainer.innerHTML += `
@@ -41,32 +63,20 @@ function renderSideList() {
     }
 }
 
-function attachListEventListeners() {
-    const list = document.querySelectorAll('.recipe-side-list-element');
-
-    list.forEach((item, index) => {
-        item.addEventListener('click', async () => {
-            try {
-                await fetchSelectedRecipe(modelInstance.getList()[index].id);
-                const recipee = modelInstance.getList()[index].id;
-                helloStatement.classList.add('hidden');
-                contentPage.innerHTML += `
-                    <img src="" alt="">
-                    <h1 class="selected-recipe-title"></h1>
-                    <div>
-                        <h2 class="duration"></h2>
-                        <h2 class="servings"></h2>
-                        <button class="bookmarks"></button>
-                    </div>
-                    <div class="ingredients">
-                        <h1 class="ingredients-title">RECIPE INGRIDIENTS</h1>
-                        <ul class="ingredients-list-ul">
-                        </ul>
-                    </div>
-                `
-            } catch (error) {
-                console.error('Error fetching the recipe:', error);
+function pagination(direction, index) {
+    let chunkedList = chunkArray(modelInstance.getList(), 7);
+        if(direction === 'next'){
+            index++;
+            renderSideList(chunkedList[index-1]);
+            previousBtn.classList.remove('hidden');
+            if(index === chunkedList.length){
+                nextBtn.classList.add('hidden');
             }
-        });
-    });
-}
+        }else if (direction === 'previous'){
+            index--;
+            renderSideList(chunkedList[index-1]);
+            if(index === 1){
+                previousBtn.classList.add('hidden');
+            }
+        }
+};
