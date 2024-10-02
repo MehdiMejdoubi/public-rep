@@ -283,6 +283,71 @@ body {
         font-size: 17px;
     }
 
+    .content-page-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+    }
+
+    .recipe-content-img {
+        width: 100%;
+        height: 40%;
+        object-fit: cover;
+        opacity: 80%;
+    }
+
+    .recipe-content-title {
+        display: flex;
+        width: 450px;
+        height: 50px;
+        background: linear-gradient(63deg, rgba(255,181,83,1) 23%, rgba(255,136,91,1) 81%);        color: white;
+        font-family: "Nunito", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 25px;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        left: 60%;
+        top: 43.5%;
+        transform: translateX(-50%); 
+    }
+
+    .recipe-content-ingredients-container {
+        width: 100%;
+        height: 60%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .recipe-content-ingredients {
+        padding-top: 50px;
+        width: 100%;
+        height: 60%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ingredient {
+        display: flex;
+        width: 40%;
+        justify-self: center;
+        font-family: "Nunito", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 17px;
+        align-items: center;
+        gap: 15px;
+        padding: 0;
+        margin: 0;
+    }
+
     .hidden {
         display: none;
     }

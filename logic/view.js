@@ -11,12 +11,12 @@ const pageNumber = document.querySelector('.page-number');
 const helloStatement = document.querySelector('.intro-text');
 const contentPage = document.querySelector('.content-page');
 
-
 searchBtn.addEventListener('click', async () => {
     await fetchRecipes(searchInput.value);
     let chunkedList = chunkArray(modelInstance.getList(), 7);
     const list = chunkedList[0];
     renderSideList(list);  
+    attachEventListeners();
     pageNumber.textContent = 1;
     previousBtn.classList.add('hidden');
 });
@@ -24,11 +24,13 @@ searchBtn.addEventListener('click', async () => {
 nextBtn.addEventListener('click', () => {
     pagination('next', pageNumber.textContent);
     pageNumber.textContent++;
+    attachEventListeners();
 });
 
 previousBtn.addEventListener('click', () => {
     pagination('previous', pageNumber.textContent);
     pageNumber.textContent--;
+    attachEventListeners();
 });
 
 function chunkArray(array, size){
@@ -80,3 +82,31 @@ function pagination(direction, index) {
             }
         }
 };
+
+function attachEventListeners(){
+    const recipes = document.querySelectorAll('.recipe-side-list-element');
+    let chunkedList = chunkArray(modelInstance.getList(), 7);
+    recipes.forEach((item, index) =>
+        item.addEventListener('click', async ()=> {
+            await fetchSelectedRecipe(chunkedList[pageNumber.textContent - 1][index].id);
+            helloStatement.classList.add('hidden');
+            const retrivedRecipe = modelInstance.getShownRecipe();
+            helloStatement.classList.add('hidden');
+            contentPage.innerHTML = '';
+            contentPage.innerHTML += `
+                <div class="content-page-content">
+                    <img class="recipe-content-img" src="${retrivedRecipe.data.recipe.image_url}" alt="recipe-content-img">
+                    <div class="recipe-content-title">${retrivedRecipe.data.recipe.title}</div>
+                    <div class="recipe-content-ingredients-container">
+                    <div class="recipe-content-ingredients">
+                        ${retrivedRecipe.data.recipe.ingredients.map(item => `
+                            <h3 class="ingredient">
+                                <span class="material-symbols-outlined">check</span>
+                                ${item.quantity ? item.quantity : ''} ${item.unit} ${item.description}
+                            </h3>`).join('')}
+                    </div>
+                </div>
+            `
+        })
+    )
+}
