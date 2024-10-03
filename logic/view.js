@@ -33,6 +33,16 @@ previousBtn.addEventListener('click', () => {
     attachEventListeners();
 });
 
+window.addEventListener('load', async () => {
+    await fetchRecipes('pizza');
+    let chunkedList = chunkArray(modelInstance.getList(), 7);
+    const list = chunkedList[0];
+    renderSideList(list);  
+    attachEventListeners();
+    pageNumber.textContent = 1;
+    previousBtn.classList.add('hidden');
+})
+
 function chunkArray(array, size){
     let resultArray = [];
     let index =  0;
