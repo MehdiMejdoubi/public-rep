@@ -348,6 +348,28 @@ body {
         margin: 0;
     }
 
+    .error-div{
+        position: absolute;
+        width: 250px;
+        height: 80px;
+        background-color: var(--secondary-color);
+        margin-top: 10%;
+        margin-left: 45%;
+        z-index: 999;
+        border-radius: 10px;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .error-message {
+        color: var(--primary-color);
+        font-family: "Nunito", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 17px;
+    }
+
     .hidden {
         display: none;
     }
