@@ -1,7 +1,8 @@
 class Model {
     static instance;
     
-    #list = [];
+    list = [];
+    paginatedList = [];
     #selectedRecipe;
     #bookmarks = [];
     #addedRecipes = [];
@@ -11,10 +12,6 @@ class Model {
             return Model.instance;
         }
         Model.instance = this;
-    }
-
-    getList() {
-        return this.#list;
     }
 
     getShownRecipe() {
@@ -27,10 +24,6 @@ class Model {
 
     getAddedRecipes() {
         return this.#addedRecipes;
-    }
-
-    setList(data) {
-        this.#list = data;
     }
 
     setShownRecipe(data) {

@@ -1,5 +1,5 @@
 const arrRange = 10;
-const arrOfInts = [1,2,3,4,1,2,3,4,1,2];
+const arrOfInts = [];
 
 //Previous Function
 const resolveUniqueInteger = function (arrOfInts) {
@@ -15,8 +15,9 @@ const resolveUniqueInteger = function (arrOfInts) {
             if(!arrOfInts.includes(randomInteger)) {
                 resolve(randomInteger);
             }else {
-                reject(`The integer ${randomInteger} is not unique`);
+                reject(randomInteger);
             } 
+            arrOfInts.push(randomInteger);
         }, randomTiming)
     })
 }
@@ -43,7 +44,7 @@ const arrOfResolvedValues = function(arrOfPromises) {
                 console.log(`resolved with ${result.value}`);
                 resolvedValues.push(result.value);
             }else {
-                console.log(`Rejected with : ${result.reason.message}`);
+                console.log(`Rejected with : ${result.reason}`);
 
             }
         })

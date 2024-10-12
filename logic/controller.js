@@ -3,28 +3,29 @@ const modelInstance = new Model();
 const errorPopup = document.querySelector('.error-div');
 
 //A.2 - Handling network error in (fetch with async / await)
-const fetchRecipes = async function(recipeName){
+const getRecipesByKeyname = async function(recipeName){
   try {
     const response = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes?search=${recipeName}`); 
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const data = await response.json();
-    modelInstance.setList(data.data.recipes);
-    console.log(modelInstance.getList());
+    const parsed = await response.json();
+    modelInstance.list = parsed.data.recipes;
+    modelInstance.paginatedList = chunkArray(modelInstance.list, 7);
+    console.log(modelInstance.paginatedList);
   } catch (error) {
-    renderError(`An error occurred while fetching recipes: ${error.message}`);
+      renderError(`An error occurred while fetching recipes: ${error.message}`);
   }
 }
 
 //XMLHttpRequest
-/*const fetchRecipes = function(recipeName) {
+/*const getRecipesByKeyname = function(recipeName) {
     const response = new XMLHttpRequest();
     response.open("GET", `https://forkify-api.herokuapp.com/api/v2/recipes?search=${recipeName}`, true);
     response.onload = function() {
         const data = JSON.parse(response.responseText);
         modelInstance.setList(data.data.recipes);
-        console.log(modelInstance.getList());
+        console.log(modelInstance.list);
     };
     response.send();
 };*/
@@ -36,9 +37,8 @@ const fetchSelectedRecipe = async function(id) {
       if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const data = await response.json();
-      modelInstance.setShownRecipe(data);
-      console.log(modelInstance.getShownRecipe());
+      const parsed = await response.json();
+      return parsed.data.recipe;
   } catch (error) {
       renderError(`An error occurred: ${error.message}`);
   }
@@ -66,9 +66,20 @@ const renderError = function(message) {
   }, 4500);
 };
 
+function chunkArray(array, size){
+  const chunks = [];
+  let index =  0;
+  while(index < array.length){
+      chunks.push(array.slice(index, index + size));
+      index += size;
+  }
+  return chunks;
+}
+
 export {
-    fetchRecipes,
-    fetchSelectedRecipe
+    getRecipesByKeyname,
+    fetchSelectedRecipe,
+    chunkArray
 }
 
 
