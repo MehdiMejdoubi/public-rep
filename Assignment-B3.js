@@ -21,21 +21,22 @@ class Queue {
     }
 }
 
-const arrOfInts = [1,1,2,2,1,1,2,2,1,1];
-const maxRange = 10;
+const arrOfInts = [];
 
-const resolveUniqueNumber = function (arr) {
-    return new Promise ((resolve, reject) => {
-        if(arr.length > maxRange) {
-            reject(new Error(`You exceeded the maximum range`));
-        }
-        
-        const randomInt = Math.round(Math.random()  *  10);
-        if(!arr.includes(randomInt)) {
-            resolve(randomInt);
-        }else  {
-            reject(new Error(randomInt));
-        }
+const getUniqueIntegerPromise = () => {
+    return new Promise((resolve, reject) => {
+        const randomTiming = Math.round(Math.random() * 2000) + 1000;
+
+        setTimeout(() => {
+            const randomInteger = Math.round(Math.random() * 10);
+
+            if(!integerOccurences.includes(randomInteger)) {
+                resolve(randomInteger);
+                integerOccurences.push(randomInteger);
+            }
+            else reject(randomInteger);
+
+        }, randomTiming)
     })
 }
 
