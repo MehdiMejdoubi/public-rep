@@ -2,64 +2,67 @@
 //Using an instance of the Queue class, resolve an ordered array of generated promises.
 // Queue class
 class Queue {
-    constructor() {
+    constructor(){
         this.queue = [];
+        this.order = 1;
     }
     
-    enqueue (promise) {
+    enqueue(promise) {
         this.queue.push(promise);
+        return this.executeResolving(promise)
     }
     
-    async executeResolving() {
-        const results = [];
-        let order = 1;
-        for (let currentPromise of this.queue) {      
-
-            try {
-                const result = await currentPromise;
-                results.push(`[${order} --> ${result}]`);
-                console.log(`Resolved with ${result}`)
-                order++
-            } catch (error){
-                console.log(`Rejected with ${error}`)
-            } 
-            
+    async executeResolving (promise) {
+        let result;
+        try {
+            result = await promise;
+            console.log(`Resolved with ${result}`);
+            this.order++;
+        }catch(error) {
+            console.log(`Rejected with ${error}`);
         }
         
-        return results;
+        return result;
     }
-    
 }
 
-//Our Promise
 const integerOccurences = [];
 
 const getUniqueIntegerPromise = () => {
     return new Promise((resolve, reject) => {
-        const randomTiming = Math.round(Math.random() * 2000) + 1000;
+        const randomDelay = Math.round(Math.random() * 2000) + 1000;
+        console.log(`Timing : ${randomDelay}s`);
         setTimeout(() => {
             const randomInteger = Math.round(Math.random() * 10);
-
+            
             if(!integerOccurences.includes(randomInteger)) {
                 resolve(randomInteger);
                 integerOccurences.push(randomInteger);
-            }
-            else reject(randomInteger);
-
-        }, randomTiming)
+            }else reject(randomInteger);
+            
+        }, randomDelay);
     })
 }
 
-//New class Instance
 const queueInstance = new Queue();
+const maxSize = 10;
+const results = [];
 
-const maximumSize = 10;
-while(queueInstance.queue.length < maximumSize) {
-    queueInstance.enqueue(getUniqueIntegerPromise());
+const processQueue = async () => {
+    for (let i = 0; i < maxSize; i++) {
+        
+        try {
+            const result = await queueInstance.enqueue(getUniqueIntegerPromise());
+            if (result !== undefined) results.push(`[${queueInstance.order - 1} -> ${result}]`);
+            
+        } catch (error) {
+            console.log(`Error: ${error}`);
+        }
+        
+    }
+    console.log(results);
 }
 
-queueInstance.executeResolving().then(results => {
-    console.log(`All resolved promises: ${results}`);
-}).catch(error => {
-    console.log('Error:', error);
-});
+processQueue();
+
+
