@@ -5,64 +5,83 @@ class Queue {
     constructor(){
         this.queue = [];
         this.results = [];
-        this.order = 1;
+        this.isProcessing = false;
     }
     
     enqueue(promise) {
-        this.queue.push(promise);
-        return this.executeResolving();
+        this.queue.push(promise); 
+        if (!this.isProcessing) {
+            this.executeResolving();
+        }
     }
     
     async executeResolving () { 
+        this.isProcessing = true;
         while(this.queue.length > 0){
             const currentPromise = this.queue.shift();
+            currentPromise.then((result) => {
+                console.log(`Resolved with ${result}`);
+                console.log(`-----------------------`);
+                this.results.push(`[${result}]`);
+            }).catch((error) => {
+                console.log(`Rejected with ${error}`);
+                console.log(`-----------------------`);
+            })
             
-            try {
+            /*try {
                 const result = await currentPromise;
                 console.log(`Resolved with ${result}`);
                 console.log(`-----------------------`);
-                this.results.push(`[${this.order} -> ${result}]`);
-                this.order++;
+                this.results.push(`[${result}]`);
             } catch(error) {
                 console.log(`Rejected with ${error}`);
                 console.log(`-----------------------`);
-            }
+            }*/
             
         }
+        this.isProcessing = false;
     }
-        
 }
 
 const integerOccurences = []; 
 
 const getUniqueIntegerPromise = () => {
+    const randomInteger = Math.round(Math.random() * 10);
+    console.log(`Random integer -> ${randomInteger}`);
+    
     return new Promise((resolve, reject) => {
         const randomDelay = Math.round(Math.random() * 2000) + 1000;
-        console.log(`Timing : ${randomDelay}s`);
         
         setTimeout(() => {
-            const randomInteger = Math.round(Math.random() * 10);
-            console.log(`Random integer -> ${randomInteger}`);
+            console.log(`Timing : ${randomDelay}ms for ${randomInteger}`);
             if(!integerOccurences.includes(randomInteger)) {
                 resolve(randomInteger);
                 integerOccurences.push(randomInteger);
             }else reject(randomInteger);
             
         }, randomDelay);
-    })
-}
+    });
+};
 
 const queueInstance = new Queue();
 const maxSize = 10;
 
-const processQueue = async () => {
-    for (let i = 0; i < maxSize; i++) {
-        await queueInstance.enqueue(getUniqueIntegerPromise());
+const processQueue = () => {
+    const promises = [];
+    for(let i = 0 ; i < 10 ; i++){
+        promises.push(getUniqueIntegerPromise());
     }
-    console.log(queueInstance.results)
+    
+    promises.forEach(promise => queueInstance.enqueue(promise));
+    
 };
 
 processQueue();
+
+setTimeout(() => {
+    console.log(queueInstance.results);
+}, 20000);
+
 
 
 
