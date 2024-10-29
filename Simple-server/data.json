@@ -1,0 +1,50 @@
+[
+    {
+        "id": 123,
+        "name": "Hamza",
+        "age": 29,
+        "description": "A smartass dude with evil intentions to take over the world"
+    },
+
+    {
+        "id": 456,
+        "name": "Mehdi",
+        "age": 29,
+        "description": "A dude with evil intentions to help the first dude taking over the world"
+    }, 
+    
+    {
+        "id": 789,
+        "name": "Monsef",
+        "age": 28,
+        "description": "Already took over the world"
+    },
+
+    {
+        "id": 147,
+        "name": "Salim",
+        "age": 28,
+        "description": "A fat dude that manipulates the world's economy with Counter-Strike micro products"
+    },
+
+    {
+        "id": 258,
+        "name": "Morched",
+        "age": 29,
+        "description": "An 18yo female is too old for him"
+    },
+
+    {
+        "id": 369,
+        "name": "Khaled",
+        "age": 29,
+        "description": "He lived his most glorious times when he occupied Paris for two full days"
+    },
+
+    {
+        "id": 159,
+        "name": "Imad",
+        "age": 29,
+        "description": "Was born to be adored"
+    }
+]

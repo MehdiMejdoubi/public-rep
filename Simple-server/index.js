@@ -1,11 +1,13 @@
 //Create simple server using node js
 const http = require('http');
 const url = require('url');
+const fs = require('fs');
+const data = fs.readFileSync(`${__dirname}/data.json`, 'utf-8');
 
 const server = http.createServer((req, res) => {
     const pathName  = req.url;
     if(pathName === '/' || pathName === '/overview'){
-        res.end('hello from the overview');
+        res.end(data);
     }else if(pathName === '/product'){
         res.end('Hello from product page');
     }else {
