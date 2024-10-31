@@ -1,0 +1,19 @@
+{
+  "name": "recipes",
+  "version": "1.0.0",
+  "description": "Backend for recipes js project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "public-rep"
+  },
+  "author": "Mehdi Mejdoubi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "pg": "^8.13.1"
+  }
+}
