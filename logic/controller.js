@@ -5,12 +5,12 @@ const errorPopup = document.querySelector('.error-div');
 //A.2 - Handling network error in (fetch with async / await)
 const getRecipesByKeyname = async function(recipeName){
   try {
-    const response = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes?search=${recipeName}`); 
+    const response = await fetch(`http://127.0.0.1:3000/recipes/recipeName/${recipeName}`);
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
     const parsed = await response.json();
-    modelInstance.list = parsed.data.recipes;
+    modelInstance.list = parsed;
     modelInstance.paginatedList = chunkArray(modelInstance.list, 7);
     console.log(modelInstance.paginatedList);
   } catch (error) {
@@ -33,12 +33,13 @@ const getRecipesByKeyname = async function(recipeName){
 //A.2 - Handling network error in (fetch with async / await)
 const fetchSelectedRecipe = async function(id) {
   try {
-      const response = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`);
+      const response = await fetch(`http://127.0.0.1:3000/recipes/id/${id}`);
       if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
       }
       const parsed = await response.json();
-      return parsed.data.recipe;
+      console.log(parsed);
+      return parsed[0];
   } catch (error) {
       renderError(`An error occurred: ${error.message}`);
   }

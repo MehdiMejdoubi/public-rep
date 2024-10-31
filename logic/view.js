@@ -52,10 +52,10 @@ function renderSideList() {
             const recipeElement = document.createElement('li');
             recipeElement.className = 'recipe-side-list-element';
             recipeElement.innerHTML = `
-                <img class="recipe-side-list-img" src="${element.image_url}" alt="img">
+                <img class="recipe-side-list-img" src="${element.image}" alt="img">
                 <div class="recipe-side-list-element-details">
                     <h1 class="recipe-side-list-element-title">${element.title.toUpperCase()}</h1>
-                    <p class="recipe-side-list-element-publisher">${element.publisher}</p>
+                    <p class="recipe-side-list-element-publisher">${element.description}</p>
                 </div>
             ` ;
             console.log(element.id);
@@ -96,7 +96,7 @@ async function loadRecipe(id){
     contentPage.innerHTML = '';
     contentPage.innerHTML += `
         <div class="content-page-content">
-            <img class="recipe-content-img" src="${recipe.image_url}" alt="recipe-content-img">
+            <img class="recipe-content-img" src="${recipe.image}" alt="recipe-content-img">
             <div class="recipe-content-title">${recipe.title}</div>
             <div class="recipe-content-ingredients-container">
             <div class="recipe-content-ingredients">
@@ -107,6 +107,6 @@ async function loadRecipe(id){
                     </h3>`).join('')}
             </div>
         </div>
-    `
+   `
 }
     

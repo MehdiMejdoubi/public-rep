@@ -1,10 +1,14 @@
 // app.js
 const express = require('express');
+const cors = require('cors');
+const path = require('path');
 const pool = require('./config/db');
 const recipesRoutes = require('./routes/controller');
 const app = express();
 
 app.use(express.json());
+app.use(cors());
+app.use('/img', express.static(path.join(__dirname, 'img')));
 
 pool.connect((err, client, release) => {
   if (err) {
