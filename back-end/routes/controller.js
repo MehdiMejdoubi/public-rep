@@ -14,9 +14,16 @@ router.get('/recipeName/:recipeName', async (req, res) => {
 
     if (result.rowCount === 0) {
         return res.status(404).json({ error: "Recipe not found" });
-        }
+    }
 
-    res.json(result.rows);
+    const recipesWithFullImagePath = result.rows.map(recipe => {
+        return {
+            ...recipe, 
+            image: `http://127.0.0.1:3000/${recipe.image}`
+        };
+    });
+    
+        res.json(recipesWithFullImagePath);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -28,21 +35,34 @@ router.get('/id/:id', async (req, res) => {
     const { id } = req.params;
   
     try {
-      const result = await pool.query(
-        `SELECT * FROM recipes WHERE id = $1`,
-        [id]
-      );
+        const result = await pool.query(
+            `SELECT r.*, i.ingredient, i.quantity, i.unit
+             FROM recipes r
+             LEFT JOIN ingredients i ON r.id = i.recipe_id
+             WHERE r.id = $1`,
+            [id]
+        );
 
-      if (result.rowCount === 0) {
-        return res.status(404).json({ error: "Recipe not found" });
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: "Recipe not found" });
         }
 
-      res.json(result.rows);
+        const recipe = result.rows[0];
+        recipe.image = `http://127.0.0.1:3000/${recipe.image}`;
+
+        recipe.ingredients = result.rows.map(row => ({
+            ingredient: row.ingredient,
+            quantity: row.quantity,
+            unit: row.unit
+        })).filter(ingredient => ingredient.ingredient); // Filter out any null ingredients
+
+        res.json(recipe);
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server error');
+        console.error(err.message);
+        res.status(500).send('Server error');
     }
-  });
+});
+
 
 //Add new element
 router.post('/add', async (req, res) => {
@@ -95,8 +115,5 @@ router.put('/edit/:id', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
-
-module.exports = router;
-
 
 module.exports = router;

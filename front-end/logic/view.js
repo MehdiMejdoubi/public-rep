@@ -103,7 +103,7 @@ async function loadRecipe(id){
                 ${recipe.ingredients.map(item => `
                     <h3 class="ingredient">
                         <span class="material-symbols-outlined">check</span>
-                        ${item.quantity ? item.quantity : ''} ${item.unit} ${item.description}
+                        ${item.quantity ? item.quantity : ''} ${item.unit} of ${item.ingredient}
                     </h3>`).join('')}
             </div>
         </div>

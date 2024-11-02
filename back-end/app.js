@@ -8,6 +8,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static(path.join(__dirname, '../front-end'))); //--> Run both front and back by only running backend server
 app.use('/img', express.static(path.join(__dirname, 'img')));
 
 pool.connect((err, client, release) => {

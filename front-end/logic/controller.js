@@ -38,8 +38,7 @@ const fetchSelectedRecipe = async function(id) {
           throw new Error(`HTTP error! status: ${response.status}`);
       }
       const parsed = await response.json();
-      console.log(parsed);
-      return parsed[0];
+      return parsed;
   } catch (error) {
       renderError(`An error occurred: ${error.message}`);
   }
